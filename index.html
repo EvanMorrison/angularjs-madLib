@@ -8,52 +8,98 @@
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat" rel="stylesheet">
 		
     <!--Bootstrap CSS-->
-    <link rel="stylesheet" type="text/css" href="Ang-BStr-JQuery/bootstrap-3.3.7-dist/css/bootstrap.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="Ang-BStr-JQuery/bootstrap-3.3.7-dist/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
     <!--Local CSS-->
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body ng-controller="MadLibController">
 	
-	<h1>{{title}}</h1>
+	<h1 class="text-center page-header">{{title}}</h1>
 
-	<div class="container">
-		<form class="row">
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="input1" class="control-label">Foreign Country</label>
-					<input type="text" class="form-control" id="input1">
+	<div class="container-fluid">
+		<form class="row" name="userForm" id="myForm">
+			<div class="col-sm-4 col-sm-offset-2">
+				<div class="form-group form-group-sm">
+					<label class="control-label">Foreign Country</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[0]">
 				</div>
-				<div] class="form-group">
-					<label class="control-label" for="input2">adverb</label>
-					<input type="text" id="input2" class="form-control">
-					adjective
-					animal
-					verb ending in -ing
-					verb
-					verb ending in -ing
-					adverb
-					adjective
-					a place
-					type of liquid
-					part of bofy` 
-
-
-			</div>
-				
-			
-			</div>
+				<div class="form-group form-group-sm">
+					<label class="control-label">adverb</label>
+					<input type="text" ng-blur="formProgress($event)" ng-model="inputs[1]" class="form-control">
+				</div>
+				<div class="form-group form-group-sm">
+					<label class="control-label">adjective</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[2]">
+				</div>
+				<div class="form-group form-group-sm">
+					<label class="control-label">animal</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[3]">
+				</div>
+				<div class="form-group form-group-sm">
+					<label class="control-label">verb ending in -ing</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[4]">
+				</div>
+				<div class="form-group form-group-sm">
+					<label class="control-label">verb</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[5]">
+				</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">verb ending in -ing</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[6]">
+					</div>
+			</div> <!-- /col-sm-4 Col 1-->
+				<div class="col-sm-4">
+					<div class="form-group form-group-sm">
+						<label class="control-label">adverb</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[7]">
+					</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">adjective</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[8]">
+					</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">a place</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[9]">
+					</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">type of liquid</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[10]">
+					</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">part of body</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[11]">
+					</div>
+					<div class="form-group form-group-sm">
+						<label class="control-label">verb</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[12]">
+					</div>
+						<hr>	
+						<button type="submit" name="submitBtn" role="submit" class="btn btn-primary" ng-click="storyReady()">Submit</button>
+						<a role="button" class="btn btn-danger pull-right" ng-click="reset()">Reset</a>
+				</div> <!-- end col 2 -->
 		</form>
-			<div class="row">
+		<div class="row" id="progressbar-row">
+			<div class="col-sm-10 col-sm-offset-1">
 				<div class="progress">
-					<div class="progress-bar" role="progressbar" style="width: 10%">
-						<span>1/10</span>
+					<div class="progress-bar" role="progressbar" style="width: {{progressPct}};min-width:3em;">
+						<span>{{progress}}/12</span>
 					</div>
 				</div>
 			</div>
+		</div>
+
+
+	</div> <!-- container -->
+	<div class="container">
 	</div>
-	If you are traveling in [foreign-country] and find yourself having to cross a piranha-filled river, here's how to do it [adverb]: Piranhas are more [adjective] during the day, so cross the river at night. Avoid areas with netted [animal] traps-piranhas may be [verb ending in ing] there looking to [verb] them! When [verb ending in ing] the river, swim [adverb]. You don't want to wake them up and make them [adjective]! Whatever you do, if you have an open wound, try to find another way to get back to the [a place]. Piranhas are attracted to fresh [type of liquid] and will most likely take a bite out of your [part of the body] if you [verb] in the water!
+
+	<section class="container">
+		<h2>Survival Advice</h2>
+		</div>
+		<p ng-show="showStory">If you are traveling in <u><strong>{{inputs[0]}}</strong></u> and find yourself having to cross a piranha-filled river, here's how to do it <u><strong>{{inputs[1]}}</strong></u>: Piranhas are more <u><strong>{{inputs[2]}}</strong></u> during the day, so cross the river at night. Avoid areas with netted <u><strong>{{inputs[3]}}</strong></u> traps-piranhas may be <u><strong>{{inputs[4]}}</strong></u> there looking to <u><strong>{{inputs[5]}}</strong></u> them! When <u><strong>{{inputs[6]}}</strong></u> the river, swim <u><strong>{{inputs[7]}}</strong></u>. You don't want to wake them up and make them <u><strong>{{inputs[8]}}</strong></u>! Whatever you do, if you have an open wound, try to find another way to get back to the <u><strong>{{inputs[9]}}</strong></u>. Piranhas are attracted to fresh <u><strong>{{inputs[10]}}</strong></u> and will most likely take a bite out of your <u><strong>{{inputs[11]}}</strong></u> if you <u><strong>{{inputs[12]}}</strong></u> in the water!</p>
+	</section>
 	<!-- jQuery -->
 	<!-- <script src="jquery-3.1.0.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -65,7 +111,7 @@
     <!-- AngularJS -->
     <!-- <script src="Ang-BStr-JQuery/angular-1.5.8/angular.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    
+
     <!-- local js -->
     <script src="app.js"></script>
 
