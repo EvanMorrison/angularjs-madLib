@@ -18,87 +18,83 @@
 	
 	<h1 class="text-center page-header">{{title}}</h1>
 
-	<div class="container-fluid">
+	<!-- this container-fluid section was originally used
+	to display all input fields at once in two columns.
+	It has been replace by a single input display system
+	below but is kept here in the commnets for reference -->
+	
+	<!-- <div class="container-fluid">
 		<form class="row" name="userForm" id="myForm">
 			<div class="col-sm-4 col-sm-offset-2">
-				<div class="form-group form-group-sm">
-					<label class="control-label">Foreign Country</label>
-					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[0]">
+				<div class="form-group form-group-sm" ng-repeat="blank in fillIns" ng-if="$index < 7">
+					<label class="control-label">{{blank.type}}</label>
+					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="blank.value">
 				</div>
-				<div class="form-group form-group-sm">
-					<label class="control-label">adverb</label>
-					<input type="text" ng-blur="formProgress($event)" ng-model="inputs[1]" class="form-control">
-				</div>
-				<div class="form-group form-group-sm">
-					<label class="control-label">adjective</label>
-					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[2]">
-				</div>
-				<div class="form-group form-group-sm">
-					<label class="control-label">animal</label>
-					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[3]">
-				</div>
-				<div class="form-group form-group-sm">
-					<label class="control-label">verb ending in -ing</label>
-					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[4]">
-				</div>
-				<div class="form-group form-group-sm">
-					<label class="control-label">verb</label>
-					<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[5]">
-				</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">verb ending in -ing</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[6]">
-					</div>
-			</div> <!-- /col-sm-4 Col 1-->
+			</div>  /col-sm-4 Col 1
 				<div class="col-sm-4">
-					<div class="form-group form-group-sm">
-						<label class="control-label">adverb</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[7]">
+					<div class="form-group form-group-sm" ng-repeat="blank in fillIns" ng-if="$index >= 7">
+						<label class="control-label">{{blank.type}}</label>
+						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="blank.value">
 					</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">adjective</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[8]">
-					</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">a place</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[9]">
-					</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">type of liquid</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[10]">
-					</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">part of body</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[11]">
-					</div>
-					<div class="form-group form-group-sm">
-						<label class="control-label">verb</label>
-						<input type="text" ng-blur="formProgress($event)" class="form-control" ng-model="inputs[12]">
-					</div>
-						<hr>	
-						<button type="submit" name="submitBtn" role="submit" class="btn btn-primary" ng-click="storyReady()">Submit</button>
-						<a role="button" class="btn btn-danger pull-right" ng-click="reset()">Reset</a>
-				</div> <!-- end col 2 -->
+				<hr>
+				<button class="btn btn-primary">
+					submit
+				</button>
+				<a href="#" class="btn btn-danger pull-right" ng-click="reset()">reset</a>
+				</div> /col-sm-4 Col 2
 		</form>
-		<div class="row" id="progressbar-row">
-			<div class="col-sm-10 col-sm-offset-1">
+	</div>  container-fluid
+	 -->
+	<section class="container-fluid">
+		<div class="panel panel-primary">
+			
+			<div class="panel-heading">
+				<div class="h4 text-center">Enter your choices for a mad lib story</div>
+				</div>
+			<div class="panel-body">
+			<div class="col-sm-6 col-sm-offset-3">
+				<span class="control-label h5">progress...</span>
 				<div class="progress">
-					<div class="progress-bar" role="progressbar" style="width: {{progressPct}};min-width:3em;">
-						<span>{{progress}}/12</span>
+					<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="width: {{progressPct}};min-width:5px">
+						<span ng-if="progress > 0">{{progress}}/13</span>
 					</div>
 				</div>
 			</div>
-		</div>
+			</div> <!-- Progressbar group -->
+				
+			<form novalidate class="panel-body" name="userForm" id="singleLineForm">
+				<div class="col-sm-6 col-sm-offset-3">
+					<div class="form-group form-group-lg" ng-repeat="blank in fillIns track by $index" ng-if="$index === counter">
+						<label class="control-label word-type">{{blank.type}}</label>
+						<input type="text" class="form-control" ng-model="blank.value" ng-keypress="isEnter($event, $index)" ng-required="true" >
+						<div class="input-group" ng-="displayNext($event, $index)">
+							<div class="input-group-btn">
+								<button class="btn btn-info btn-block btn-lg" type="submit" ng-disabled="$index === 0"ng-click="displayPrev($event, $index)"><span>&laquo;</span> previous</button>
+							</div>  <!-- previous button -->
+							<div class="input-group-btn">
+								<button class="btn btn-primary btn-block btn-lg" ng-disabled="$index === (fillIns.length -1)" ng-click="displayNext($event, $index)">next <span>&raquo;</span></button>
+							</div> <!-- next button -->
+						</div> <!-- button group -->
+					</div> <!-- ng-repeat form-group input -->
+				</div> <!-- /col -->
+			</form>
+		</div> <!-- /panel -->
+	</section>
 
-
-	</div> <!-- container -->
-	<div class="container">
-	</div>
-
-	<section class="container">
-		<h2>Survival Advice</h2>
-		</div>
-		<p ng-show="showStory">If you are traveling in <u><strong>{{inputs[0]}}</strong></u> and find yourself having to cross a piranha-filled river, here's how to do it <u><strong>{{inputs[1]}}</strong></u>: Piranhas are more <u><strong>{{inputs[2]}}</strong></u> during the day, so cross the river at night. Avoid areas with netted <u><strong>{{inputs[3]}}</strong></u> traps-piranhas may be <u><strong>{{inputs[4]}}</strong></u> there looking to <u><strong>{{inputs[5]}}</strong></u> them! When <u><strong>{{inputs[6]}}</strong></u> the river, swim <u><strong>{{inputs[7]}}</strong></u>. You don't want to wake them up and make them <u><strong>{{inputs[8]}}</strong></u>! Whatever you do, if you have an open wound, try to find another way to get back to the <u><strong>{{inputs[9]}}</strong></u>. Piranhas are attracted to fresh <u><strong>{{inputs[10]}}</strong></u> and will most likely take a bite out of your <u><strong>{{inputs[11]}}</strong></u> if you <u><strong>{{inputs[12]}}</strong></u> in the water!</p>
+	<section class="container-fluid" ng-if="completed">
+		<div class="well" >
+			<div class="row">
+				<h2 class="text-center">Survival Advice</h2>
+				<div class="col-sm-8 col-sm-offset-2">
+					<p>
+					<span ng-repeat="blank in fillIns">
+						{{story[$index]}}<b><u>{{blank.value}}</u></b>
+					</span>
+					</p>
+					<button class="btn btn-danger btn-xs pull-right" id="reset" ng-click="reset()">reset</button>
+				</div> <!-- /col -->
+			</div> <!-- /row -->
+		</div><!-- /well -->
 	</section>
 	<!-- jQuery -->
 	<!-- <script src="jquery-3.1.0.js"></script> -->
