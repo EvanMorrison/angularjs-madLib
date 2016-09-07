@@ -2,3 +2,33 @@
 #progressbar-row {
 	padding-top: 30px;
 }
+
+.word-type {
+	font-size: 2em;
+	margin: 0;
+}
+
+.panel .panel-heading  {
+	background: #5cb85c;
+}
+.panel, .panel-body, .panel .panel-heading {
+	border: none;
+}
+
+.panel {
+	box-shadow: 3px 5px 20px 5px rgb(200,200,200);
+}
+
+p {
+	font-size: 1.25em;
+	margin-bottom: 2em;
+}
+
+
+
+#reset, button.btn-xs {
+	position: relative;
+	margin-top: 10px;
+	bottom: 20px;
+	right: 20px;
+}
