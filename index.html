@@ -72,7 +72,7 @@
 								<button class="btn btn-info btn-block btn-lg" type="submit" ng-disabled="$index === 0"ng-click="displayPrev($event, $index)"><span>&laquo;</span> previous</button>
 							</div>  <!-- previous button -->
 							<div class="input-group-btn">
-								<button class="btn btn-primary btn-block btn-lg" ng-disabled="$index === (fillIns.length -1)" ng-click="displayNext($event, $index)">next <span>&raquo;</span></button>
+								<button class="btn btn-primary btn-block btn-lg" ng-click="displayNext($event, $index)" ng-disabled="$index >= (fillIns.length-1) && !(lastInput && userForm.$valid)"><span ng-if="lastInput && userForm.$valid || (lastInput && $index >= fillIns.length-1)">submit</span><span ng-if="!lastInput || (userForm.$invalid && $index < fillIns.length-1)">next</span> <span>&raquo;</span></button>
 							</div> <!-- next button -->
 						</div> <!-- button group -->
 					</div> <!-- ng-repeat form-group input -->

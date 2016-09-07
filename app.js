@@ -68,8 +68,7 @@ app.controller("MadLibController", function($scope) {
 	
 	$scope.progress = 0;
 	$scope.completed = false;
-	
-
+	$scope.lastInput = false;
 	//clear the form
 	$scope.reset = function() {
 		$scope.fillIns.forEach(function(val) {
@@ -83,16 +82,32 @@ app.controller("MadLibController", function($scope) {
 	};
 
 	//a progressbar that shows portion of completed form
-	$scope.formProgress = function($event){
+	$scope.formProgress = function($event, $index, direction){
 		$scope.progress = 0;
-		//count up how many fill-in values are populated
-		$scope.fillIns.forEach(function(currentValue) {
-			if (currentValue.value) {
-				$scope.progress += 1;
+		$scope.completedIndex = [];
+		
+		//count up how many fill-in values are populated, and fill an array
+		//with the index numbers of the completed fillIns
+		$scope.fillIns.forEach(function(currentVal, index) {
+			if (currentVal.value) {
+				$scope.progress ++;
+				$scope.completedIndex.push(index);
 			}
 		});
+		
+		//determine if all inputs other than the one currently displayed
+		//have been completed. If so, set a boolean variable lastInput to true
+		//this is used for controlling what label is displayed on the 'next/submit'
+		//button
+		if ($scope.completedIndex.indexOf($index + direction) == -1 && ($scope.completedIndex.length === $scope.fillIns.length -1)) {
+			$scope.lastInput = true;
+		} else {
+			$scope.lastInput = false
+		}
+
 		//convert progress to a percentage; used to set the width of the progress bar
 		$scope.progressPct = Math.floor($scope.progress/$scope.fillIns.length*100).toString() + '%';
+		
 		//set the completed variabel to true or false
 		if ($scope.progress === $scope.fillIns.length) {
 			$scope.completed = true;
@@ -101,6 +116,11 @@ app.controller("MadLibController", function($scope) {
 		}
 	};
 
+	$scope.btnText = function ($index) {
+		if ($scope.progress == ($scope.fillIns.length -1) && (!$scope.fillIns[$index].value)) {
+			return true;
+		}
+	}
 
 	$scope.counter = 0;
 	//display Next input upon pressing enter key in input field
@@ -119,30 +139,24 @@ app.controller("MadLibController", function($scope) {
 			$scope.counter = $scope.fillIns.length - 1;
 
 		}	
-		$scope.formProgress(0);
+		$scope.formProgress($event, $index, 1);
 		setTimeout(function() {
 			angular.element('input').select();
 			angular.element('button')[1]
 		},20);
 		
-		console.log('fillInslength = ' + $scope.fillIns.length);
-		console.log('index = ' + $index);
-		console.log('counter = ' + $index)
-		// $scope.isComplete();
 	};
 
 	//display previous input
 	$scope.displayPrev = function($event, $index) {
-		// $event.preventDefault();
+		$event.preventDefault();
 		if ($index > 0) {
 			$scope.counter = $index - 1;
-			$scope.formProgress(0);
+			$scope.formProgress($event, $index, -1);
 			setTimeout(function() {
 				angular.element('input').select();
-				// angular.element('#singleLineForm').find('input')[$index-1].select();
 			},20);
 		}
-		// $scope.isComplete();
 	};
 
 	

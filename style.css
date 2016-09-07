@@ -12,7 +12,7 @@
 	background: #5cb85c;
 }
 .panel, .panel-body, .panel .panel-heading {
-	border-color: #5cb85c;
+	border: none;
 }
 
 .panel {
