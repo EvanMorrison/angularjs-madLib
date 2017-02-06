@@ -3,6 +3,18 @@
 	padding-top: 30px;
 }
 
+.progress {
+	height: 30px;
+}
+
+.progress .progress-bar {
+	padding: 5px;
+}
+
+.progress .progress-bar span {
+	font-size: 1.15em;
+}
+
 .word-type {
 	font-size: 2em;
 	margin: 0;
