@@ -1,0 +1,23 @@
+{
+  "name": "angular-madLib",
+  "version": "1.0.0",
+  "description": "Use Angularjs to create a web page with a  mad lib style story that accepts user inputs and inserts them in the story.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvanMorrison/angularjs-madLib.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EvanMorrison/angularjs-madLib/issues"
+  },
+  "homepage": "https://github.com/EvanMorrison/angularjs-madLib#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
